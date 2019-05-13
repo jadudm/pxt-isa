@@ -8,7 +8,8 @@
 // Paw f1b0
 // Sound Art F519
 // Headphones F025
-//% weight=100 color=#881127 icon="\uF025"
+// Bullhorn F0A1
+//% weight=100 color=#881127 icon="\uF0A1"
 
 namespace ISA {
     function delay(): void {
