@@ -1,6 +1,6 @@
 {
     "name": "ISA",
-    "version": "0.0.10",
+    "version": "0.0.11",
     "description": "Interactive Sound Art @ Bates",
     "dependencies": {
         "core": "*",
