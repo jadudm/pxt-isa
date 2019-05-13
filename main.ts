@@ -23,6 +23,10 @@ namespace ISA {
         writeS("E")
         delay();
     }
+    function write_midi(ch: number, v: number): void {
+        writeN(ch);
+        writeN(v);
+    }
 
     /**
      * sends a MIDI message
@@ -31,13 +35,12 @@ namespace ISA {
      */
     //% blockId="isa_midi_message" block="midi_message|chan %command_channel|value %value"
     export function midi_message(chan: number, value: number): void {
-        writeN(chan);
         if (value < 0) {
             value = 0;
         } else if (value > 127) {
             value = 127;
         }
-        writeN(value);
+        write_midi(chan, value);
     }
 
     /**
@@ -52,14 +55,13 @@ namespace ISA {
     //% blockId="isa_midi_scaled" block="midi_scaled chan %command_channel value %value from %from_low \u2192 %from_high to %to_low \u2192 %to_high"
     //% inlineInputMode=inline
     export function midi_scaled(chan: number, value: number, from_low: number, from_high: number, to_low: number, to_high: number): void {
-        writeN(chan);
         value = pins.map(value, from_low, from_high, to_low, to_high);
         if (value < 0) {
             value = 0;
         } else if (value > 127) {
             value = 127;
         }
-        writeN(value);
+        write_midi(chan, value);
     }
 
     /**
@@ -70,10 +72,8 @@ namespace ISA {
     //% 
     //% blockId="isa_bang" block="bang chan %command_channel"
     export function bang(chan: number): void {
-        writeN(chan);
-        writeN(1);
-        writeN(chan);
-        writeN(0);
+        write_midi(chan, 1);
+        write_midi(chan, 0);
     }
 
     /**
