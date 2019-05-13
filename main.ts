@@ -4,9 +4,7 @@
  * MIT License
  * Copyright 2019 Matt Jadud <mjadud@bates.edu>
  */
-// 1F4BD - Minidisc
-// f1b0 - Paw
-//% weight=100 color=#881127 icon="\uf1b0"
+//% weight=100 color=#881127 icon="\uf1b0" block="ISA"
 namespace ISA {
     function delay(): void {
         basic.pause(1);
@@ -21,12 +19,12 @@ namespace ISA {
         delay();
     }
     /**
-     * midi_message2
+     * sends a MIDI message
      * @param chan MIDI command channel
      * @param value Value to send
      */
-    //% blockId="isa_midi_message" block="midi_message2|chan %command_channel|value %value"
-    export function midi_message2(chan: number, value: number): void {
+    //% blockId="isa_midi_message" block="midi_message|chan %command_channel|value %value"
+    export function midi_message(chan: number, value: number): void {
         writeN(chan);
         if (value < 0) {
             value = 0;
@@ -37,7 +35,7 @@ namespace ISA {
     }
 
     /**
-     * midi_scaled
+     * sends a scaled MIDI message
      * @param chan MIDI command channel
      * @param value Value to scale
      * @param from_low Low end of input range
@@ -59,7 +57,7 @@ namespace ISA {
     }
 
     /**
-     * bang
+     * sends a MIDI bang
      * @param chan Foo
      * @param value Foo
      */
@@ -79,7 +77,7 @@ namespace ISA {
     }
 
     /**
-    * acceleration
+    * sends scaled acceleromter data
     * @param axis The axis
     */
     //% blockId = isa_acceleration
