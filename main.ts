@@ -58,7 +58,6 @@ namespace ISA {
             value = 127;
         }
         writeN(value);
-        basic.pause(3);
     }
 
     /**
