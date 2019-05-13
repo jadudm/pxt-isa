@@ -6,7 +6,7 @@
  */
 // 1F4BD - Minidisc
 // f1b0 - Paw
-//% weight=100 color=#881127 icon="\u1F4BD"
+//% weight=100 color=#881127 icon="\uf1b0"
 namespace ISA {
     function delay(): void {
         basic.pause(1);
@@ -25,9 +25,10 @@ namespace ISA {
      * @param command_channel Channel
      * @param value Value to send
      */
-    //% block="midi_message|channel %command_channel|value %value"
-    export function midi_message(command_channel: number, value: number): void {
-        writeN(command_channel);
+    //% blockId = isa_midi_message
+    //% block="midi_message|chan %command_channel|value %value"
+    export function midi_message(chan: number, value: number): void {
+        writeN(chan);
         if (value < 0) {
             value = 0;
         } else if (value > 127) {
@@ -37,19 +38,19 @@ namespace ISA {
     }
 
     /**
-     * MIDI
-     * @param command_channel Channel
+     * midi_scaled
+     * @param chan MIDI command channel
      * @param value Value to scale
      * @param from_low Low end of input range
      * @param from_high High end of input range
      * @param to_low Low end of output range
      * @param to_high High end of output range
      */
-
-    //% block="midi scaled channel %command_channel value %value from %from_low \u2192 %from_high to %to_low \u2192 %to_high"
+    //% blockId = isa_midi_scaled
+    //% block="midi scaled chan %command_channel value %value from %from_low \u2192 %from_high to %to_low \u2192 %to_high"
     //% inlineInputMode=inline
-    export function midi_scaled(command_channel: number, value: number, from_low: number, from_high: number, to_low: number, to_high: number): void {
-        writeN(command_channel);
+    export function midi_scaled(chan: number, value: number, from_low: number, from_high: number, to_low: number, to_high: number): void {
+        writeN(chan);
         value = pins.map(value, from_low, from_high, to_low, to_high);
         if (value < 0) {
             value = 0;
@@ -62,14 +63,14 @@ namespace ISA {
 
     /**
      * bang
-     * @param command_channel Foo
+     * @param chan Foo
      * @param value Foo
      */
-    //% block="bang channel %command_channel"
-    export function bang(command_channel: number): void {
-        writeN(command_channel);
+    //% block="bang chan %command_channel"
+    export function bang(chan: number): void {
+        writeN(chan);
         writeN(1);
-        writeN(command_channel);
+        writeN(chan);
         writeN(0);
     }
 
@@ -83,7 +84,7 @@ namespace ISA {
     * acceleration
     * @param axis The axis
     */
-
+    //% blockId = isa_acceleration
     //% blockId="isa_accel" block="acceleration (scaled 0 - 127) %axis_enum"
     //% color=#D400D4
     export function acceleration(d: Dimension): number {
