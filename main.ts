@@ -21,12 +21,12 @@ namespace ISA {
         delay();
     }
     /**
-     * midi_message
+     * midi_message2
      * @param chan MIDI command channel
      * @param value Value to send
      */
-    //% blockId="isa_midi_message" block="midi_message|chan %command_channel|value %value"
-    export function midi_message(chan: number, value: number): void {
+    //% blockId="isa_midi_message" block="midi_message2|chan %command_channel|value %value"
+    export function midi_message2(chan: number, value: number): void {
         writeN(chan);
         if (value < 0) {
             value = 0;
