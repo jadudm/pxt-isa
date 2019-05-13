@@ -25,8 +25,7 @@ namespace ISA {
      * @param chan MIDI command channel
      * @param value Value to send
      */
-    //% blockId = isa_midi_message
-    //% block="midi_message|chan %command_channel|value %value"
+    //% blockId=isa_midi_message block="midi_message|chan %command_channel|value %value"
     export function midi_message(chan: number, value: number): void {
         writeN(chan);
         if (value < 0) {
@@ -46,8 +45,7 @@ namespace ISA {
      * @param to_low Low end of output range
      * @param to_high High end of output range
      */
-    //% blockId = isa_midi_scaled
-    //% block="midi scaled chan %command_channel value %value from %from_low \u2192 %from_high to %to_low \u2192 %to_high"
+    //% blockId=isa_midi_scaled block="midi_scaled chan %command_channel value %value from %from_low \u2192 %from_high to %to_low \u2192 %to_high"
     //% inlineInputMode=inline
     export function midi_scaled(chan: number, value: number, from_low: number, from_high: number, to_low: number, to_high: number): void {
         writeN(chan);
@@ -65,8 +63,8 @@ namespace ISA {
      * @param chan Foo
      * @param value Foo
      */
-    //% blockId = isa_bang
-    //% block="bang chan %command_channel"
+    //% 
+    //% blockId=isa_bang block="bang chan %command_channel"
     export function bang(chan: number): void {
         writeN(chan);
         writeN(1);
