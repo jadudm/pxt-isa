@@ -22,7 +22,7 @@ namespace ISA {
     }
     /**
      * midi_message
-     * @param command_channel Channel
+     * @param chan MIDI command channel
      * @param value Value to send
      */
     //% blockId = isa_midi_message
@@ -66,6 +66,7 @@ namespace ISA {
      * @param chan Foo
      * @param value Foo
      */
+    //% blockId = isa_bang
     //% block="bang chan %command_channel"
     export function bang(chan: number): void {
         writeN(chan);
