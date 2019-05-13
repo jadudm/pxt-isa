@@ -4,7 +4,11 @@
  * MIT License
  * Copyright 2019 Matt Jadud <mjadud@bates.edu>
  */
-//% weight=100 color=#881127 icon="\uf1b0"
+// https://semantic-ui.com/elements/icon.html
+// Paw f1b0
+// Sound Art F519
+// Headphones F025
+//% weight=100 color=#881127 icon="\uF025"
 
 namespace ISA {
     function delay(): void {
@@ -70,12 +74,6 @@ namespace ISA {
         writeN(1);
         writeN(chan);
         writeN(0);
-    }
-
-    enum AxisEnum {
-        X = 1,
-        Y = 2,
-        Z = 3,
     }
 
     /**
