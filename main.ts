@@ -72,12 +72,6 @@ namespace ISA {
         writeN(0);
     }
 
-    enum AxisEnum {
-        X = 1,
-        Y = 2,
-        Z = 3,
-    }
-
     /**
     * sends scaled acceleromter data
     * @param axis The axis
