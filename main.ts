@@ -5,19 +5,20 @@
  * Copyright 2019 Matt Jadud <mjadud@bates.edu>
  */
 //% weight=100 color=#881127 icon="\uf1b0" block="ISA"
+function delay(): void {
+    basic.pause(1);
+}
+function writeS(s: string): void {
+    serial.writeString(s);
+}
+function writeN(n: number): void {
+    writeS("S")
+    serial.writeNumber(n);
+    writeS("E")
+    delay();
+}
+
 namespace ISA {
-    function delay(): void {
-        basic.pause(1);
-    }
-    function writeS(s: string): void {
-        serial.writeString(s);
-    }
-    function writeN(n: number): void {
-        writeS("S")
-        serial.writeNumber(n);
-        writeS("E")
-        delay();
-    }
     /**
      * sends a MIDI message
      * @param chan MIDI command channel
