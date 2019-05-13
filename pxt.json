@@ -1,7 +1,7 @@
 {
-    "name": "Interactive Sound Art",
+    "name": "ISA",
     "version": "0.0.7",
-    "description": "",
+    "description": "Interactive Sound Art @ Bates",
     "dependencies": {
         "core": "*",
         "radio": "*"
