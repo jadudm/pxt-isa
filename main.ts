@@ -19,14 +19,37 @@ namespace ISA {
         serial.writeString(s);
     }
     function writeN(n: number): void {
-        writeS("S")
+        writeS("<")
         serial.writeNumber(n);
-        writeS("E")
+        writeS(">")
         delay();
     }
-    function write_midi(ch: number, v: number): void {
-        writeN(ch);
-        writeN(v);
+
+    function write_cmd(ls: number[]): void {
+        let crc = 0;
+        for (let v of ls) {
+            crc = crc + v;
+        }
+        crc = crc % 128;
+        // Header
+        writeS("*+");
+        writeN(ls.length);
+        for (let v of ls) {
+            writeN(v);
+        }
+        writeN(crc);
+        writeS("^");
+    }
+
+    /**
+     * sends a MIDI message
+     * @param chan MIDI command channel
+     * @param value Value to send
+     */
+    //% blockId="isa_midi_command" block="midi_cmd|msg %value"
+    export function midi_command(msg: number[]): void {
+        serial.redirect(SerialPin.P0, SerialPin.P1, 115200);
+        write_cmd(msg);
     }
 
     /**
@@ -41,7 +64,7 @@ namespace ISA {
         } else if (value > 127) {
             value = 127;
         }
-        write_midi(chan, value);
+        midi_command([chan, value]);
     }
 
     /**
@@ -62,7 +85,7 @@ namespace ISA {
         } else if (value > 127) {
             value = 127;
         }
-        write_midi(chan, value);
+        midi_command([chan, value]);
     }
 
     /**
@@ -73,8 +96,8 @@ namespace ISA {
     //% 
     //% blockId="isa_bang" block="bang chan %command_channel"
     export function bang(chan: number): void {
-        write_midi(chan, 1);
-        write_midi(chan, 0);
+        midi_command([chan, 1]);
+        midi_command([chan, 0]);
     }
 
     /**
