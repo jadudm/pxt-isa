@@ -33,7 +33,7 @@ namespace ISA {
         crc = crc % 128;
         // Header
         writeS("*+");
-        writeN(ls.length);
+        writeN(ls.length + 1);
         for (let v of ls) {
             writeN(v);
         }
