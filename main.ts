@@ -1,8 +1,8 @@
 
 /**
- * Code to support Interactive Sound Art at Bates College.
+ * Code to support Interactive Sound Art with a Feather and Micro:Bit.
  * MIT License
- * Copyright 2019 Matt Jadud <mjadud@bates.edu>
+ * Copyright 2019 Matt Jadud <matt@jadud.com>
  */
 // https://semantic-ui.com/elements/icon.html
 // Paw f1b0
@@ -15,30 +15,44 @@ namespace ISA {
     function delay(): void {
         basic.pause(1);
     }
-    function writeS(s: string): void {
-        serial.writeString(s);
-    }
-    function writeN(n: number): void {
-        writeS("<")
-        serial.writeNumber(n);
-        writeS(">")
-        delay();
-    }
 
     function write_cmd(ls: number[]): void {
-        let crc = 0;
+        let crc = 0
+
         for (let v of ls) {
-            crc = crc + v;
+            crc = crc + v
         }
-        crc = crc % 128;
+
+        crc = crc % 128
+
         // Header
-        writeS("*+");
-        writeN(ls.length + 1);
+        let header = pins.createBuffer(2);
+        header.setNumber(NumberFormat.Int8LE, 0, 0x2A)
+        header.setNumber(NumberFormat.Int8LE, 1, 0x2B)
+        serial.writeBuffer(header)
+
+        serial.writeString("<")
+        serial.writeNumber(ls.length)
+        serial.writeString(">")
+
         for (let v of ls) {
-            writeN(v);
+            serial.writeString("<")
+            serial.writeNumber(v)
+            serial.writeString(">")
         }
-        writeN(crc);
-        writeS("^");
+
+        serial.writeString("<")
+        serial.writeNumber(crc)
+        serial.writeString(">")
+        serial.writeString("^")
+    }
+
+    /**
+     * Sets up the serial for the board to talk to a Feather.
+     */
+    //% blockId="isa_setup_isa_board" block="setup_isa_board"
+    export function setup_isa_board(): void {
+        serial.redirect(SerialPin.P8, SerialPin.P12, 115200)
     }
 
     /**
@@ -48,8 +62,7 @@ namespace ISA {
      */
     //% blockId="isa_midi_command" block="midi_cmd|msg %value"
     export function midi_command(msg: number[]): void {
-        serial.redirect(SerialPin.P0, SerialPin.P1, 115200);
-        write_cmd(msg);
+        write_cmd(msg)
     }
 
     /**
@@ -60,11 +73,11 @@ namespace ISA {
     //% blockId="isa_midi_message" block="midi_message|chan %command_channel|value %value"
     export function midi_message(chan: number, value: number): void {
         if (value < 0) {
-            value = 0;
+            value = 0
         } else if (value > 127) {
-            value = 127;
+            value = 127
         }
-        midi_command([chan, value]);
+        write_cmd([chan, value])
     }
 
     /**
@@ -81,11 +94,11 @@ namespace ISA {
     export function midi_scaled(chan: number, value: number, from_low: number, from_high: number, to_low: number, to_high: number): void {
         value = pins.map(value, from_low, from_high, to_low, to_high);
         if (value < 0) {
-            value = 0;
+            value = 0
         } else if (value > 127) {
-            value = 127;
+            value = 127
         }
-        midi_command([chan, value]);
+        write_cmd([chan, value])
     }
 
     /**
@@ -96,8 +109,8 @@ namespace ISA {
     //% 
     //% blockId="isa_bang" block="bang chan %command_channel"
     export function bang(chan: number): void {
-        midi_command([chan, 1]);
-        midi_command([chan, 0]);
+        write_cmd([chan, 1])
+        write_cmd([chan, 0])
     }
 
     /**
