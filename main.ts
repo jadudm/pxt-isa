@@ -102,13 +102,24 @@ namespace ISA {
     }
 
     /**
-     * sends a MIDI bang
+     * sends a MIDI on
      * @param chan Foo
      * @param value Foo
      */
     //% 
     //% blockId="isa_bang" block="bang chan %command_channel"
     export function bang(chan: number): void {
+        write_cmd([chan, 1])
+    }
+
+    /**
+     * sends a MIDI on/off
+     * @param chan Foo
+     * @param value Foo
+     */
+    //% 
+    //% blockId="isa_bang" block="toggle chan %command_channel"
+    export function toggle(chan: number): void {
         write_cmd([chan, 1])
         write_cmd([chan, 0])
     }
