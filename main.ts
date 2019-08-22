@@ -98,7 +98,7 @@ namespace ISA {
         } else if (value > 127) {
             value = 127
         }
-        write_cmd([chan, value])
+        write_cmd([chan, Math.round(value)])
     }
 
     /**
