@@ -118,7 +118,7 @@ namespace ISA {
      * @param value Foo
      */
     //% 
-    //% blockId="isa_bang" block="toggle chan %command_channel"
+    //% blockId="isa_toggle" block="toggle chan %command_channel"
     export function toggle(chan: number): void {
         write_cmd([chan, 1])
         write_cmd([chan, 0])
